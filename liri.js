@@ -1,24 +1,29 @@
+//setting environment using require module and .env file (and dotenv module)
 require("dotenv").config();
 
 // const keys = require("./keys.js");
+
+//require request module and moment module for usage in app
 let request = require("request");
 let moment = require("moment");
 
 // const spotify = new Spotify(keys.spotify);
 
+//var for process.argv array
 let args = process.argv;
+//empty array to use to build search query string
 let queryArray = [];
 
+//for loop to get each word of user input and then push it to the queryArray string
 for (i=3; i < args.length; i++) {
     let toPush = args[i]
     queryArray.push(toPush);
 }
 
+//this var 'stringifies' the user's input
 let string = queryArray.join(" ");
 
-console.log(args);
-console.log(string);
-
+//this var is for the command
 let command = process.argv[2];
 
 if (command === "concert-this") {
