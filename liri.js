@@ -38,7 +38,7 @@ if (command === "concert-this") {
     if (string) {
         spotifyThis();
     } else {
-        console.log("please input a song name after the command");
+        spotifyDefault();
     }
 
 } else if (command === "movie-this") {
@@ -108,30 +108,45 @@ function spotifyThis() {
 
     let getKeys = new spotify(keys.spotify);
 
-    console.log(getKeys);
-
-    getKeys.search({ type: 'track', query: `${string}`, limit: 3 }, function (err, data) {
+    getKeys.search({ type: 'track', query: `${string}`, limit: 1 }, function (err, data) {
         if (err) {
             return console.log('Error occurred: ' + err);
         }
 
-        //This will show the following information about the song in your terminal/bash window:
-        // Artist(s)
-        // The song's name
-        // A preview link of the song from Spotify
-        // The album that the song is from
+        let artist = data.tracks.items[0].artists[0].name;
 
-        //name of artist
-        console.log(data.tracks.items[0].artists[0].name);
+        let song = data.tracks.items[0].name;
 
-        //song name
-        console.log(data.tracks.items[0].name);
+        let link = data.tracks.items[0].external_urls.spotify;
 
-        //album
-        console.log(data.tracks.items[0].album.name);
+        let album = data.tracks.items[0].album.name;
 
-        //preview
-        console.log(data.tracks.items[0].external_urls.spotify);
+
+        console.log(`\nArtist: ${artist}\n\nSong Name: ${song}\n\nLink to Spotify: ${link}\n\nAlbum name: ${album}\n`);
     });
 
+}
+
+function spotifyDefault() {
+    
+    let getKeys = new spotify(keys.spotify);
+
+    getKeys.search({ type: 'track', query: 'the sign', limit: 10 }, function (err, data) {
+        if (err) {
+            return console.log('Error occurred: ' + err);
+        }
+
+
+        let artist = data.tracks.items[7].artists[0].name;
+
+        let song = data.tracks.items[7].name;
+
+        let link = data.tracks.items[7].external_urls.spotify;
+
+        let album = data.tracks.items[7].album.name;
+
+
+        console.log(`\nArtist: ${artist}\n\nSong Name: ${song}\n\nLink to Spotify: ${link}\n\nAlbum name: ${album}\n`);
+
+    });
 }
