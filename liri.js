@@ -38,7 +38,7 @@ if (command === "concert-this") {
     if (string) {
         movieTHis();
     } else {
-        console.log("please input a movie name after the command");
+        console.log(`If you haven't watched "Mr. Nobody," then you should: http://www.imdb.com/title/tt0485947/\nit's on Netflix also`);
     }
 } else if (command === "do-what-it-says") {
     console.log("do-what-it-says");
@@ -69,5 +69,31 @@ function concertThis() {
 }
 
 function movieTHis() {
+    request(`http://www.omdbapi.com/?t=${string}&y=&plot=short&apikey=trilogy`, function (error, response, body){
+        if (!error && response.statusCode === 200) {
+            let stringObj = JSON.parse(body);
 
+            let title = stringObj.Title;
+            let year = stringObj.Year;
+            let imdb = stringObj.Ratings[0].Value;
+            let rottent = stringObj.Ratings[1].Value;
+            let country = stringObj.Country;
+            let language = stringObj.Language;
+            let plot = stringObj.Plot;
+            let actors = stringObj.Actors;
+
+            console.log(title);
+            console.log(year);
+            console.log(imdb);
+            console.log(rottent);
+            console.log(country);
+            console.log(language);
+            console.log(plot);
+            console.log(actors);
+
+        } else {
+            console.log("something's wrong");
+        }
+    })
+   
 }
