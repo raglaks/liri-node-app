@@ -63,7 +63,7 @@ function concertThis() {
             });
 
         } else {
-            console.log("something's wrong");
+            console.log("something's wrong, try again");
         }
     });
 }
@@ -82,17 +82,10 @@ function movieTHis() {
             let plot = stringObj.Plot;
             let actors = stringObj.Actors;
 
-            console.log(title);
-            console.log(year);
-            console.log(imdb);
-            console.log(rottent);
-            console.log(country);
-            console.log(language);
-            console.log(plot);
-            console.log(actors);
+            console.log(`\nTitle: ${title}\n\nYear: ${year}\n\nIMDB Rating: ${imdb}\n\nRotten Tomatoes Rating: ${rottent}\n\nCountry: ${country}\n\nLanguage: ${language}\n\nPlot: ${plot}\n\nActors: ${actors}`);
 
         } else {
-            console.log("something's wrong");
+            console.log("something's wrong, try again");
         }
     })
    
