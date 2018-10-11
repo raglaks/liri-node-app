@@ -6,6 +6,7 @@ const request = require("request");
 const moment = require("moment");
 const spotify = require('node-spotify-api');
 const keys = require("./keys");
+const fs = require("fs");
 
 
 //var for process.argv array
@@ -30,7 +31,7 @@ if (command === "concert-this") {
     if (string) {
         concertThis();
     } else {
-        console.log("please input a band name after the command");
+        console.log("\nplease input a band name after the command\n");
     }
 
 } else if (command === "spotify-this-song") {
@@ -46,12 +47,12 @@ if (command === "concert-this") {
     if (string) {
         movieTHis();
     } else {
-        console.log(`If you haven't watched "Mr. Nobody," then you should: http://www.imdb.com/title/tt0485947/\nit's on Netflix also`);
+        console.log(`\nIf you haven't watched "Mr. Nobody," then you should: http://www.imdb.com/title/tt0485947/\nit's on Netflix also\n`);
     }
 
 } else if (command === "do-what-it-says") {
 
-    console.log("do-what-it-says");
+    doAsSaid();
 
 } else {
 
@@ -65,17 +66,21 @@ function concertThis() {
         if (!error && response.statusCode === 200) {
             let stringObj = JSON.parse(body);
 
-            stringObj.forEach(element => {
+            
 
-                let venue = element.venue.name;
-                let city = element.venue.city;
-                let date = element.datetime;
-                let format = moment(date).format("DD/MM/YYYY");
+                stringObj.forEach(element => {
 
-                console.log(`${string} are playing a show in ${city}, at ${venue}, on ${format}.`);
-            });
+                    let name = element.lineup[0];
+                    let venue = element.venue.name;
+                    let city = element.venue.city;
+                    let date = element.datetime;
+                    let format = moment(date).format("DD/MM/YYYY");
+    
+                    console.log(`\n${name} are playing a show in ${city}, at ${venue}, on ${format}.\n`);
+                });
 
         } else {
+            console.log(error);
             console.log("something's wrong, try again");
         }
     });
@@ -95,7 +100,7 @@ function movieTHis() {
             let plot = stringObj.Plot;
             let actors = stringObj.Actors;
 
-            console.log(`\nTitle: ${title}\n\nYear: ${year}\n\nIMDB Rating: ${imdb}\n\nRotten Tomatoes Rating: ${rottent}\n\nCountry: ${country}\n\nLanguage: ${language}\n\nPlot: ${plot}\n\nActors: ${actors}`);
+            console.log(`\nTitle: ${title}\n\nYear: ${year}\n\nIMDB Rating: ${imdb}\n\nRotten Tomatoes Rating: ${rottent}\n\nCountry: ${country}\n\nLanguage: ${language}\n\nPlot: ${plot}\n\nActors: ${actors}\n`);
 
         } else {
             console.log("something's wrong, try again");
@@ -149,4 +154,44 @@ function spotifyDefault() {
         console.log(`\nArtist: ${artist}\n\nSong Name: ${song}\n\nLink to Spotify: ${link}\n\nAlbum name: ${album}\n`);
 
     });
+}
+
+function doAsSaid() {
+
+    const concert = "concert-this";
+    const movie = "movie-this";
+    const spotify = "spotify-this-song";
+    
+    fs.readFile("random.txt", "utf8", function(error, data) {
+
+        if (error) {
+          return console.log(error);
+        }
+      
+        console.log(data);
+
+        if (data.includes(spotify)) {
+
+            let input = data.replace(spotify, " ");
+            let input1 = input.replace(",", " ");
+            let input2 = input1.replace('"', ' ');
+            let input3 = input2.replace('"', " ");
+            let string = input3.trim();
+
+            console.log(string);
+
+            spotifyThis(string);
+
+        } else if (data.includes(movie)) {
+
+            console.log("check for movies--success");
+
+        } else if (data.includes(concert)) {
+
+            console.log("check for concerts--success");
+
+        }
+      
+      });
+
 }
