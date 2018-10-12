@@ -196,8 +196,16 @@ function doAsSaid() {
 
         } else if (data.includes(concert)) {
 
-            console.log("check for concerts--success");
+            let input = data.replace(concert, " ");
+            let input1 = input.replace(",", " ");
+            let input2 = input1.replace('"', ' ');
+            let input3 = input2.replace('"', " ");
+            let stringInner = input3.trim();
 
+            string = stringInner;
+
+            concertThis();
+        
         }
       
       });
