@@ -47,7 +47,15 @@ if (command === "concert-this") {
     if (string) {
         movieTHis();
     } else {
+        stringC = (`\n${command}:\n`);
+
+        logThis(stringC);
+
         console.log(`\nIf you haven't watched "Mr. Nobody," then you should: http://www.imdb.com/title/tt0485947/\nit's on Netflix also\n`);
+
+        text = (`\nIf you haven't watched "Mr. Nobody," then you should: http://www.imdb.com/title/tt0485947/\nit's on Netflix also\n`);
+
+        logThis(text);
     }
 
 } else if (command === "do-what-it-says") {
@@ -66,21 +74,25 @@ function concertThis() {
         if (!error && response.statusCode === 200) {
             let stringObj = JSON.parse(body);
 
-                stringObj.forEach(element => {
+            stringC = (`\n${command}:\n`);
 
-                    let name = element.lineup[0];
-                    let venue = element.venue.name;
-                    let city = element.venue.city;
-                    let date = element.datetime;
-                    let format = moment(date).format("DD/MM/YYYY");
-    
-                    console.log(`\n${name} are playing a show in ${city}, at ${venue}, on ${format}.\n`);
+            logThis(stringC);
 
-                    let text = (`\n${name} are playing a show in ${city}, at ${venue}, on ${format}.\n`);
+            stringObj.forEach(element => {
 
-                    logThis(text);
-                    
-                });
+                let name = element.lineup[0];
+                let venue = element.venue.name;
+                let city = element.venue.city;
+                let date = element.datetime;
+                let format = moment(date).format("DD/MM/YYYY");
+
+                console.log(`\n${name} are playing a show in ${city}, at ${venue}, on ${format}.\n`);
+
+                let text = (`\n${name} are playing a show in ${city}, at ${venue}, on ${format}.\n`);
+
+                logThis(text);
+
+            });
 
         } else {
             console.log(error);
@@ -90,6 +102,11 @@ function concertThis() {
 }
 
 function movieTHis() {
+
+    stringC = (`\n${command}:\n`);
+
+    logThis(stringC);
+
     request(`http://www.omdbapi.com/?t=${string}&y=&plot=short&apikey=trilogy`, function (error, response, body) {
         if (!error && response.statusCode === 200) {
             let stringObj = JSON.parse(body);
@@ -118,6 +135,10 @@ function movieTHis() {
 
 function spotifyThis() {
 
+    stringC = (`\n${command}:\n`);
+
+    logThis(stringC);
+
     let getKeys = new spotify(keys.spotify);
 
     getKeys.search({ type: 'track', query: `${string}`, limit: 1 }, function (err, data) {
@@ -144,7 +165,11 @@ function spotifyThis() {
 }
 
 function spotifyDefault() {
-    
+
+    stringC = (`\n${command}:\n`);
+
+    logThis(stringC);
+
     let getKeys = new spotify(keys.spotify);
 
     getKeys.search({ type: 'track', query: 'the sign', limit: 10 }, function (err, data) {
@@ -174,11 +199,11 @@ function doAsSaid() {
     const concert = "concert-this";
     const movie = "movie-this";
     const spotify = "spotify-this-song";
-    
-    fs.readFile("random.txt", "utf8", function(error, data) {
+
+    fs.readFile("random.txt", "utf8", function (error, data) {
 
         if (error) {
-          return console.log(error);
+            return console.log(error);
         }
 
         if (data.includes(spotify)) {
@@ -216,25 +241,21 @@ function doAsSaid() {
             string = stringInner;
 
             concertThis();
-        
+
         }
-      
-      });
+
+    });
 
 }
 
 function logThis(text) {
 
-    fs.appendFile("log.txt", text, function(err) {
+    fs.appendFile("log.txt", text, function (err) {
 
-    if (err) {
-      console.log(err);
-    }
-  
-    else {
-      console.log("Content Added!");
-    }
-  
-  });
+        if (err) {
+            console.log(err);
+        }
+
+    });
 
 }
