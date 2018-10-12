@@ -168,7 +168,7 @@ function doAsSaid() {
           return console.log(error);
         }
       
-        console.log(data);
+        //console.log(data);
 
         if (data.includes(spotify)) {
 
@@ -178,15 +178,21 @@ function doAsSaid() {
             let input3 = input2.replace('"', " ");
             let stringInner = input3.trim();
 
-            console.log(stringInner);
-
             string = stringInner;
 
             spotifyThis();
 
         } else if (data.includes(movie)) {
 
-            console.log("check for movies--success");
+            let input = data.replace(movie, " ");
+            let input1 = input.replace(",", " ");
+            let input2 = input1.replace('"', ' ');
+            let input3 = input2.replace('"', " ");
+            let stringInner = input3.trim();
+
+            string = stringInner;
+
+            movieTHis();
 
         } else if (data.includes(concert)) {
 
