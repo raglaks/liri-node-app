@@ -66,8 +66,6 @@ function concertThis() {
         if (!error && response.statusCode === 200) {
             let stringObj = JSON.parse(body);
 
-            
-
                 stringObj.forEach(element => {
 
                     let name = element.lineup[0];
@@ -77,6 +75,11 @@ function concertThis() {
                     let format = moment(date).format("DD/MM/YYYY");
     
                     console.log(`\n${name} are playing a show in ${city}, at ${venue}, on ${format}.\n`);
+
+                    let text = (`\n${name} are playing a show in ${city}, at ${venue}, on ${format}.\n`);
+
+                    logThis(text);
+                    
                 });
 
         } else {
@@ -101,6 +104,10 @@ function movieTHis() {
             let actors = stringObj.Actors;
 
             console.log(`\nTitle: ${title}\n\nYear: ${year}\n\nIMDB Rating: ${imdb}\n\nRotten Tomatoes Rating: ${rottent}\n\nCountry: ${country}\n\nLanguage: ${language}\n\nPlot: ${plot}\n\nActors: ${actors}\n`);
+
+            let text = (`\nTitle: ${title}\n\nYear: ${year}\n\nIMDB Rating: ${imdb}\n\nRotten Tomatoes Rating: ${rottent}\n\nCountry: ${country}\n\nLanguage: ${language}\n\nPlot: ${plot}\n\nActors: ${actors}\n`);
+
+            logThis(text);
 
         } else {
             console.log("something's wrong, try again");
@@ -128,6 +135,10 @@ function spotifyThis() {
 
 
         console.log(`\nArtist: ${artist}\n\nSong Name: ${song}\n\nLink to Spotify: ${link}\n\nAlbum name: ${album}\n`);
+
+        let text = (`\nArtist: ${artist}\n\nSong Name: ${song}\n\nLink to Spotify: ${link}\n\nAlbum name: ${album}\n`);
+
+        logThis(text);
     });
 
 }
@@ -141,7 +152,6 @@ function spotifyDefault() {
             return console.log('Error occurred: ' + err);
         }
 
-
         let artist = data.tracks.items[7].artists[0].name;
 
         let song = data.tracks.items[7].name;
@@ -150,8 +160,11 @@ function spotifyDefault() {
 
         let album = data.tracks.items[7].album.name;
 
-
         console.log(`\nArtist: ${artist}\n\nSong Name: ${song}\n\nLink to Spotify: ${link}\n\nAlbum name: ${album}\n`);
+
+        let text = (`\nArtist: ${artist}\n\nSong Name: ${song}\n\nLink to Spotify: ${link}\n\nAlbum name: ${album}\n`);
+
+        logThis(text);
 
     });
 }
@@ -167,8 +180,6 @@ function doAsSaid() {
         if (error) {
           return console.log(error);
         }
-      
-        //console.log(data);
 
         if (data.includes(spotify)) {
 
@@ -209,5 +220,21 @@ function doAsSaid() {
         }
       
       });
+
+}
+
+function logThis(text) {
+
+    fs.appendFile("log.txt", text, function(err) {
+
+    if (err) {
+      console.log(err);
+    }
+  
+    else {
+      console.log("Content Added!");
+    }
+  
+  });
 
 }
