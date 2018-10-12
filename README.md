@@ -4,4 +4,4 @@ A command line node app that takes in user input and returns data (from APIs) ac
 
 I didn't run into any major problems while doing this. I learned a good deal about NPM packages and how useful they can be for a variety of projects. I hope to dive deeper into NPMs in the future. 
 
-If you want to run this, remember to create a .env file for the Spotify API keys. You'll also need to NPM install dotenv and generate your Spotify keys to run everything smoothly.
+If you want to run this, remember to create a .env file for the Spotify API keys. You can just `npm install` for the required modules, but you must generate new Spotify API keys to run everything smoothly.
